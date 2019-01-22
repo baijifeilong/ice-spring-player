@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh" style="font-size: 1.5em; height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Ice Spring Player</title>
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <script src="./node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+    <!--suppress CssUnusedSymbol -->
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        #musics > div:not(:last-child) {
+            border-bottom: 1px dashed black;
+        }
+
+        #lyrics > div.active {
+            color: blueviolet;
+            font-weight: bold;
+        }
+
+        .alphabet {
+            font-family: Arial, Tahoma, serif;
+            font-weight: bold;
+        }
+
+        .alphabet.m:before {
+            content: 'M';
+        }
+
+        .alphabet.l:before {
+            content: 'L';
+        }
+
+        .alphabet.c:before {
+            content: 'C';
+        }
+
+        #settings {
+            opacity: 0;
+        }
+
+        #settings.active {
+            opacity: 1;
+        }
+
+        #controls > div {
+            padding: 0.5rem;
+        }
+
+        #musics > div.active {
+            background: lightblue;
+        }
+
+        #musics > div > span.remove {
+            opacity: 0;
+        }
+
+        #musics > div > span.remove.active {
+            opacity: 1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="margin: 0; display: flex; flex-direction: column; height: 100%">
+<div id="settings" style="position: fixed; right: 0; display: flex; flex-direction: column; visibility: visible;
+ align-items: center; justify-content: center; padding: 5pt; background: #add8e655; font-size: medium">
+    <div id="toggle-always-on-top"><i class="fa fa-lock"></i></div>
+    <div id="toggle-fullscreen"><i class="fa fa-expand"></i></div>
+    <div id="toggle-maximize"><i class="fa fa-expand-arrows-alt"></i></div>
+    <div id="quit"><i class="fa fa-window-close"></i></div>
+    <div id="increase-global-font"><i class="fa fa-search-plus"></i></div>
+    <div id="decrease-global-font"><i class="fa fa-search-minus"></i></div>
+    <div id="toggle-view"><i class="fa fa-glasses"></i></div>
+    <div id="increase-lyric-font"><i class="fa fa-kiwi-bird"></i></div>
+    <div id="decrease-lyric-font"><i class="fa fa-crow"></i></div>
+    <div id="toggle-musics"><i class="alphabet m"></i></div>
+    <div id="toggle-lyrics"><i class="alphabet l"></i></div>
+    <div id="toggle-controls"><i class="alphabet c"></i></div>
+    <div id="toggle-lyrics-flex-direction"><i class="fa fa-fish"></i></div>
+</div>
+<div id="musics-lyrics" style="display: flex; flex-grow: 1e9; height: 0;">
+    <div id="musics"
+         style="width: 0;flex-grow: 1; flex-shrink: 1; overflow-y: scroll; overflow-x: hidden;
+         display: flex; flex-direction: column; border-right: 1px solid lightblue">
+        <div style="display: flex; flex: 0 0 auto; align-items: center;">
+            <span class="number"
+                  style="flex: 0 1 auto; padding: 0.1rem; width: 1.7rem; text-align: right;">Number</span>
+            <span class="artist" style="flex: 1 1 auto; padding: 0.1rem; width: 0; margin-left: 0.3rem;
+                  border-left: 1px dashed black; border-right: 1px dashed black">Artist</span>
+            <span class="song" style="flex: 2 1 auto; padding: 0.1rem; width: 0; margin-left: 0.3rem">Song</span>
+            <span class="remove"><i class="fa fa-trash-alt" style="padding: 0.1rem;"></i></span>
+        </div>
+    </div>
+    <div id="lyrics"
+         style="display: flex; flex-direction: column; flex-basis: 0; width: 0; flex-grow: 1; flex-wrap: nowrap;
+         overflow-y: scroll; overflow-x: hidden; align-items: center; font-size: 1em; text-align: center; ">
+        <div style="text-align: center; margin: auto; padding: 0 0.1em 0 0.1em; flex-shrink: 0; word-break: break-all">
+            Lyric Show
+        </div>
+    </div>
+</div>
+<!--suppress CssUnknownProperty -->
+<div id="controls"
+     style="display: flex; flex-grow: 1; align-items: center; height: 2.5rem; border-top: 1px solid lightblue;
+     user-select:none; -webkit-app-region:drag">
+    <div id="play-previous"><i class="fa fa-backward"></i></div>
+    <div id="play-pause"><i class="fa fa-play"></i></div>
+    <div id="play-next"><i class="fa fa-forward"></i></div>
+    <div id="stop-play"><i class="fa fa-stop"></i></div>
+    <progress id="progress-bar" value="0" max="100" style="flex-grow: 1"></progress>
+    <div id="progress-label">0:00/0:00</div>
+</div>
+<script>
+    require('./renderer.js');
+</script>
+</body>
+</html>

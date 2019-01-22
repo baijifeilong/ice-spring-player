@@ -1,0 +1,19 @@
+{
+  "name": "ice-spring-player",
+  "version": "2019.1.0",
+  "description": "Write purest code, make purest player, for purest you",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/baijifeilong/ice-spring-player",
+  "author": "baijifeilong@gmail.com",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.6.3",
+    "electron": "^4.0.1"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.4.24"
+  }
+}
