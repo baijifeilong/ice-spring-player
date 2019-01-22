@@ -1,6 +1,6 @@
 {
   "name": "ice-spring-player",
-  "version": "2019.1.1",
+  "version": "2019.1.2",
   "description": "Write purest code, make purest player, for purest you",
   "main": "main.js",
   "scripts": {
