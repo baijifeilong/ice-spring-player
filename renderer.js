@@ -164,10 +164,6 @@ quitElement.addEventListener("click", function () {
     app.exit();
 });
 
-["mouseenter", "mouseleave"].forEach($ => settingsElement.addEventListener($, function (e) {
-    e.type.includes("enter") ? this.classList.add("active") : this.classList.remove("active");
-}));
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////// Drag and drop listeners
 
@@ -514,4 +510,3 @@ function calculateLyricPosition(lyricMap, position) {
     }
     return endPosition;
 }
-
