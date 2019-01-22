@@ -152,6 +152,13 @@ controlsElement.addEventListener("dblclick", function () {
     window.setFullScreen(!window.isFullScreen());
 });
 
+quitElement.addEventListener("click", function () {
+    app.exit();
+});
+
+////////////////////////////////////////////////////////////////////////////////
+////////// Global listeners
+
 bodyElement.addEventListener("mousedown", function () {
     bodyElement.setAttribute("data-is-dragging", "false");
 });
@@ -160,8 +167,8 @@ bodyElement.addEventListener("mousemove", function () {
     bodyElement.setAttribute("data-is-dragging", "true");
 });
 
-quitElement.addEventListener("click", function () {
-    app.exit();
+window.addEventListener("resize", function () {
+    settingsElement.style.flexDirection = window.innerHeight >= 350 ? "column" : "row-reverse";
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
