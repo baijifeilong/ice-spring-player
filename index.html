@@ -47,10 +47,19 @@
 
         #settings > div {
             padding: 2.5pt;
+            text-align: center;
         }
 
-        #controls > div {
+        #settings > div:not(:first-child):hover {
+            background: radial-gradient(palegreen, #add8e655);
+        }
+
+        #controls > * {
             padding: 0.5rem;
+        }
+
+        #controls > div:hover {
+            background: radial-gradient(deepskyblue, white);
         }
 
         #musics > div.active {
@@ -69,11 +78,12 @@
 </head>
 <body style="margin: 0; display: flex; flex-direction: column; height: 100%">
 <div id="settings" style="position: fixed; right: 0; display: flex; flex-direction: column; visibility: visible;
- align-items: center; justify-content: center; background: #add8e655; font-size: medium; z-index: 1">
+ align-items: stretch; justify-content: center; background: #add8e655; font-size: medium; z-index: 1">
+    <div style="-webkit-app-region: drag"><i class="fa fa-arrows-alt"></i></div>
     <div id="toggle-always-on-top"><i class="fa fa-lock"></i></div>
+    <div id="quit"><i class="fa fa-window-close"></i></div>
     <div id="toggle-fullscreen"><i class="fa fa-expand"></i></div>
     <div id="toggle-maximize"><i class="fa fa-expand-arrows-alt"></i></div>
-    <div id="quit"><i class="fa fa-window-close"></i></div>
     <div id="increase-global-font"><i class="fa fa-search-plus"></i></div>
     <div id="decrease-global-font"><i class="fa fa-search-minus"></i></div>
     <div id="toggle-view"><i class="fa fa-glasses"></i></div>
@@ -87,7 +97,7 @@
 <div id="musics-lyrics" style="display: flex; flex-grow: 1e9; height: 0;">
     <div id="musics"
          style="width: 0;flex-grow: 1; flex-shrink: 1; overflow-y: scroll; overflow-x: hidden;
-         display: flex; flex-direction: column; border-right: 1px solid lightblue">
+         display: flex; flex-direction: column; border-right: 1px solid lightblue; scroll-behavior: auto">
         <div style="display: flex; flex: 0 0 auto; align-items: center;">
             <span class="number"
                   style="flex: 0 1 auto; padding: 0.1rem; width: 1.7rem; text-align: right;">Number</span>
@@ -99,7 +109,8 @@
     </div>
     <div id="lyrics"
          style="display: flex; flex-direction: column; flex-basis: 0; width: 0; flex-grow: 1; flex-wrap: nowrap;
-         overflow-y: scroll; overflow-x: hidden; align-items: center; font-size: 1em; text-align: center; ">
+         overflow-y: scroll; overflow-x: hidden; align-items: center; font-size: 1em; text-align: center;
+         scroll-behavior: smooth;">
         <div style="text-align: center; margin: auto; padding: 0 0.1em 0 0.1em; flex-shrink: 0; word-break: break-all">
             Lyric Show
         </div>
@@ -114,7 +125,7 @@
     <div id="play-next"><i class="fa fa-forward"></i></div>
     <div id="stop-play"><i class="fa fa-stop"></i></div>
     <progress id="progress-bar" value="0" max="100" style="flex-grow: 1"></progress>
-    <div id="progress-label">0:00/0:00</div>
+    <span id="progress-label">0:00/0:00</span>
 </div>
 <script>
     require('./renderer.js');

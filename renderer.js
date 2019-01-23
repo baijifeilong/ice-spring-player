@@ -132,7 +132,7 @@ toggleLyricsFlexDirection.addEventListener("click", function () {
 toggleMaximizeElement.addEventListener("click", function () {
     const window = remote.getCurrentWindow();
     window.isMaximized() ? window.unmaximize() : window.maximize();
-    this.firstElementChild.setAttribute("data-icon", window.isMaximized() ? "arrows-alt" : "expand-arrows-alt");
+    this.firstElementChild.setAttribute("data-icon", window.isMaximized() ? "compress-arrows-alt" : "expand-arrows-alt");
 });
 
 toggleFullscreenElement.addEventListener("click", function () {
@@ -237,7 +237,7 @@ audioElement.addEventListener("timeupdate", function () {
     const lyricIndex = Object.keys(currentLyricMap).indexOf(lyricPosition);
     const lyricElement = [...lyricsElement.children][lyricIndex];
     lyricElement.classList.add("active");
-    lyricElement.scrollIntoView({behavior: 'smooth'});
+    lyricElement.scrollIntoView({});
 
     const positionSeconds = Number.parseInt(this.currentTime);
     const durationSeconds = Number.parseInt(this.duration);
@@ -286,6 +286,7 @@ audioElement.addEventListener("loadedmetadata", function () {
             currentLyricMap[millis] = contentPart;
         })
     });
+    // lyricsElement.children[0].scrollIntoView({});
     [...lyricsElement.children].forEach($ => $.remove());
     Object.entries(currentLyricMap).forEach(([k, v]) => {
         const lyricElement = lyricTemplate.cloneNode(true);
