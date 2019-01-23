@@ -156,7 +156,7 @@ quitElement.addEventListener("click", function () {
     app.exit();
 });
 
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////// Global listeners
 
 bodyElement.addEventListener("mousedown", function () {
@@ -251,7 +251,7 @@ audioElement.addEventListener("timeupdate", function () {
  * Listener for music metadata loaded and load lyric file
  */
 audioElement.addEventListener("loadedmetadata", function () {
-    const musicFilename = decodeURI(audioElement.src).replace("file://", "");
+    const musicFilename = audioElement.realSrc;
     const musicElement = [...musicsElement.children].filter($ => $.getAttribute("data-filename") === musicFilename)[0];
 
     [...musicsElement.children].forEach($ => $.classList.remove("active"));
@@ -315,7 +315,7 @@ audioElement.addEventListener("loadedmetadata", function () {
  * Play next music
  */
 function playNext() {
-    const currentMusicFilename = decodeURI(audioElement.src).replace("file://", "");
+    const currentMusicFilename = audioElement.realSrc;
     const musicsExceptCurrent = allMusics.filter($ => $["filename"] !== currentMusicFilename);
     if (musicsExceptCurrent.length === 0) return;
     const nextMusicFilename = musicsExceptCurrent[~~(musicsExceptCurrent.length * Math.random())]["filename"];
@@ -403,7 +403,6 @@ function saveMusicsToConfig(musics) {
  * @returns {{song: string, filename: *, artist: string}[]}
  */
 function loadMusicsFromFilesAndFolders(filesAndFolders) {
-    console.log("Load filenames:", eval("new Date().toISOString()+' '+Math.random()"));
     let newMusicFilenames = [];
     for (const item of filesAndFolders) {
         if (fs.lstatSync(item).isDirectory()) {
@@ -413,12 +412,10 @@ function loadMusicsFromFilesAndFolders(filesAndFolders) {
             newMusicFilenames.push(item);
         }
     }
-    console.log("Filter filenames:", eval("new Date().toISOString()+' '+Math.random()"));
     const oldMusicFilenames = allMusics.map($ => $["filename"]);
     newMusicFilenames = newMusicFilenames
         .filter($ => $.endsWith(".mp3"))
         .filter($ => !oldMusicFilenames.includes($));
-    console.log("Parse musics:", eval("new Date().toISOString()+' '+Math.random()"));
     const newMusics = newMusicFilenames.map((filename) => {
         const baseFilename = path.basename(filename);
         const matcher = /(.+)-(.+)\.mp3/.exec(baseFilename);
@@ -427,7 +424,6 @@ function loadMusicsFromFilesAndFolders(filesAndFolders) {
         return {artist, song, filename};
     });
     if (newMusics.length === 0) return;
-    console.log("Loading musics:", eval("new Date().toISOString()+' '+Math.random()"));
     loadMusics(newMusics);
     return newMusics;
 }
@@ -440,49 +436,41 @@ function loadMusicsFromFilesAndFolders(filesAndFolders) {
 function loadMusics(newMusics) {
     [...Array(0)].forEach(() => newMusics.push(...newMusics));
     console.log("Loading musics: ", newMusics);
-    const allChildren = [];
-    newMusics.forEach(({artist, song, filename}) => {
-        allMusics.push({artist, song, filename});
-        const musicElement = musicTemplate.cloneNode(true);
-        musicElement.querySelector(".number").textContent = allMusics.length.toString();
-        musicElement.querySelector(".artist").textContent = artist;
-        musicElement.querySelector(".song").textContent = song;
+    allMusics.push(...newMusics);
+    console.log("All musics:", [...allMusics]);
+    allMusics.sort(((a, b) => `${a["artist"]}-${a["song"]}`.localeCompare(`${b["artist"]}-${b["song"]}`)));
+    console.log("Sorted musics:", [...allMusics]);
+
+    const allMusicElements = [...musicsElement.children].concat(newMusics.map(() => musicTemplate.cloneNode(true)));
+    allMusicElements.forEach((musicElement, index) => {
+        const {artist, song, filename} = allMusics[index];
+        musicElement.classList.remove("active");
+        filename === audioElement.realSrc && musicElement.classList.add("active");
         musicElement.setAttribute("data-filename", filename);
-        allChildren.push(musicElement);
-        musicElement.addEventListener("click", function () {
-            if (bodyElement.getAttribute("data-is-dragging") === "false") playMusic(filename);
-        });
-        const removeElement = musicElement.querySelector("span.remove");
+        const children = [...musicElement.children];
+        children[0].textContent = index + 1;
+        children[1].textContent = artist;
+        children[2].textContent = song;
+        const removeElement = children[3];
         ["mouseenter", "mouseleave"].forEach($ => removeElement.addEventListener($, function (e) {
             e.type.includes("enter") ? this.classList.add("active") : this.classList.remove("active");
         }));
         removeElement.addEventListener("click", function (e) {
             e.stopPropagation();
             const filename = this.parentElement.getAttribute("data-filename");
-            const currentMusicFilename = decodeURI(audioElement.src).replace("file://", "");
+            const currentMusicFilename = audioElement.realSrc;
             if (filename === currentMusicFilename) {
                 if (allMusics.length > 1) playNext(); else stopPlay();
             }
             removeMusic(filename);
         });
+        musicElement.addEventListener("click", function () {
+            if (bodyElement.getAttribute("data-is-dragging") === "false") playMusic(filename);
+        });
     });
-    const fragment = document.createDocumentFragment();
-    fragment.append(...allChildren);
-    // musicsElement.append(...allChildren);
-    musicsElement.appendChild(fragment);
-    console.log("Elements Loaded:", eval("new Date().toISOString()+' '+Math.random()"));
 
-    allMusics.sort(((a, b) => `${a["artist"]}-${a["song"]}`.localeCompare(`${b["artist"]}-${b["song"]}`)));
-    const sortedMusicElements = [...musicsElement.children].sort((a, b) =>
-        allMusics.findIndex($ => $["filename"] === a.getAttribute("data-filename")) -
-        allMusics.findIndex($ => $["filename"] === b.getAttribute("data-filename"))
-    );
-    sortedMusicElements.forEach((el, index) => {
-        el.querySelector(".number").textContent = (index + 1).toString();
-    });
-    [...musicsElement.children].forEach($ => $.remove());
-    musicsElement.append(...sortedMusicElements);
-    console.log("Sorted musics:", allMusics);
+    musicsElement.textContent = "";
+    musicsElement.append(...allMusicElements);
 }
 
 /**
@@ -517,3 +505,10 @@ function calculateLyricPosition(lyricMap, position) {
     }
     return endPosition;
 }
+
+Object.defineProperty(Audio.prototype, "realSrc", {
+    get: function () {
+        const realSrc = decodeURIComponent(this.src).replace("file://", "");
+        return realSrc.endsWith(".html") ? "" : realSrc;
+    }
+});
