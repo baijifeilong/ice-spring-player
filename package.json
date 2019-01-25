@@ -1,6 +1,6 @@
 {
-  "name": "ice-spring-player",
-  "productName": "Ice Spring Player",
+  "name": "ice-spring",
+  "productName": "Ice Spring",
   "version": "2019.1.4",
   "description": "Purest player for purest you",
   "main": "main.js",
@@ -8,7 +8,7 @@
     "start": "electron .",
     "dist": "electron-builder"
   },
-  "repository": "https://github.com/baijifeilong/ice-spring-player",
+  "repository": "https://github.com/baijifeilong/ice-spring",
   "author": "baijifeilong@gmail.com",
   "license": "GPL-3.0",
   "devDependencies": {
