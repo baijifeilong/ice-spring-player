@@ -1,4 +1,4 @@
-# Ice Spring [中文版](README-zh_CN.md)
+# Ice Spring [中文版](README-zh_CN.md) [![Build Status](https://travis-ci.org/baijifeilong/ice-spring.svg?branch=master)](https://travis-ci.org/baijifeilong/ice-spring)
 
 > Purest player for purest you.
 

@@ -1,4 +1,4 @@
-# 冰泉 [English Version](README.md)
+# 冰泉 [English Version](README.md) [![Build Status](https://travis-ci.org/baijifeilong/ice-spring.svg?branch=master)](https://travis-ci.org/baijifeilong/ice-spring)
 
 > 最纯的播放器给最纯的你
 
