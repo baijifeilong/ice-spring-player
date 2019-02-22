@@ -17,9 +17,9 @@ Ice Spring is a music player with flexible layout
 
 ## Captures
 
-- ![Main layout](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring.png)
-- ![Lyric layout](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-2.png)
-- ![Lyric layout 2](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-3.png)
+![Main layout](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring.png)
+![Lyric layout](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-2.png)
+![Lyric layout 2](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-3.png)
 
 ### License
 
