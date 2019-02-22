@@ -17,9 +17,9 @@
 
 ## 截图
 
-- ![主界面](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring.png)
-- ![歌词布局](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-2.png)
-- ![歌词布局2](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-3.png)
+![主界面](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring.png)
+![歌词布局](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-2.png)
+![歌词布局2](https://raw.githubusercontent.com/baijifeilong/resources/master/ice-spring/ice-spring-3.png)
 
 ## 协议
 
