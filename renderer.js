@@ -509,7 +509,8 @@ function calculateLyricPosition(lyricMap, position) {
 
 Object.defineProperty(Audio.prototype, "realSrc", {
     get: function () {
-        const realSrc = decodeURIComponent(this.src).replace("file://", "");
+        let realSrc = decodeURIComponent(this.src).replace("file://", "");
+        if ((process.platform === "win32") && realSrc) realSrc = realSrc.substring(1).replace(/\//g, "\\")
         return realSrc.endsWith(".html") ? "" : realSrc;
     }
 });
