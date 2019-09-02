@@ -46,6 +46,7 @@ const toggleLyricsFlexDirection = document.getElementById("toggle-lyrics-flex-di
 const toggleMaximizeElement = document.getElementById("toggle-maximize"); // The button to toggle window's maximization
 const toggleFullscreenElement = document.getElementById("toggle-fullscreen"); // The button to toggle window's fullscreen
 const toggleAlwaysOnTopElement = document.getElementById("toggle-always-on-top"); // The button to toggle window's always-on-top
+const doPlayNextElement = document.getElementById("do-play-next"); // The button to toggle window's always-on-top
 const quitElement = document.getElementById("quit"); // The button to quit application
 
 ///// Global templates
@@ -146,6 +147,10 @@ toggleAlwaysOnTopElement.addEventListener("click", function () {
     window.setAlwaysOnTop(!window.isAlwaysOnTop());
     this.firstElementChild.setAttribute("data-icon", window.isAlwaysOnTop() ? "unlock" : "lock");
 });
+
+doPlayNextElement.addEventListener("click", function () {
+    playNext();
+})
 
 controlsElement.addEventListener("dblclick", function () {
     const window = remote.getCurrentWindow();
