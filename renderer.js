@@ -412,7 +412,7 @@ function loadMusicsFromFilesAndFolders(filesAndFolders) {
     let newMusicFilenames = [];
     for (const item of filesAndFolders) {
         if (fs.lstatSync(item).isDirectory()) {
-            const filenames = fs.readdirSync(item).map($ => `${item}/${$}`);
+            const filenames = fs.readdirSync(item).map($ => `${item}${path.sep}${$}`);
             newMusicFilenames.push(...filenames);
         } else {
             newMusicFilenames.push(item);
